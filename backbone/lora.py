@@ -393,9 +393,9 @@ class LoRA_ViT_timm(nn.Module):
         # print('save i', i)
         for j in range(i+1):
             if j == i:
-                scaling_param[i][j] = self.wrapped_param[0].param.clone()
+                scaling_param[i][j] = self.wrapped_param[0].param.detach().clone()
             else:
-                scaling_param[i][j] = self.wrapped_param_prev[j].param.clone()  
+                scaling_param[i][j] = self.wrapped_param_prev[j].param.detach().clone()
         torch.save(scaling_param, filename + 'scaling_factor'+str(self.task_id-1)+'.pt')
         
     def save_lora_parameters(self, filename: str, task_id) -> None:
