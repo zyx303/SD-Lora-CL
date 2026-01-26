@@ -37,6 +37,7 @@ class Learner(BaseLearner):
             "Learning on {}-{}".format(self._known_classes, self._total_classes)
         )
 
+        # labels:(5000,) images:(5000, 32, 32, 3)
         train_dataset = data_manager.get_dataset(
             np.arange(self._known_classes, self._total_classes),
             source="train",
@@ -129,6 +130,8 @@ class Learner(BaseLearner):
         else:
             self._network.backbone.save_lora_parameters(save_lora_name, self._cur_task)
             self._network.save_fc(save_lora_name, self._cur_task)
+        # Save scaling factors and a single-file checkpoint for this task
+        self._save_task_checkpoint()
 
     def get_optimizer(self):
         if self.args['optimizer'] == 'sgd':
@@ -212,6 +215,42 @@ class Learner(BaseLearner):
             prog_bar.set_description(info)
 
         logging.info(info)
+
+    def _save_task_checkpoint(self):
+        """Save per-task checkpoint after training finishes.
+        - Persist scaling matrix via LoRA backbone's save_wrap_param
+        - Save a single-file checkpoint with backbone and fc state_dicts
+        """
+        save_dir = self.args.get('filepath', './')
+        os.makedirs(save_dir, exist_ok=True)
+
+        # Handle DP wrapping
+        net = self._network.module if len(self._multiple_gpus) > 1 else self._network
+
+        # Ensure scaling matrix (including current task) is saved
+        # Note: save_lora_parameters() increments task_id inside LoRA_ViT_timm,
+        # so calling save_wrap_param here writes the correct row (current task)
+        if hasattr(net, 'backbone') and hasattr(net.backbone, 'save_wrap_param'):
+            try:
+                net.backbone.save_wrap_param(save_dir)
+            except Exception as e:
+                logging.warning(f"Failed to save scaling matrix: {e}")
+
+        # Pack a unified checkpoint for convenient resume/inference
+        ckpt_path = os.path.join(save_dir, f"ckpt_task_{self._cur_task}.pt")
+        try:
+            backbone_state = net.backbone.state_dict() if hasattr(net, 'backbone') else {}
+            fc_state = net.fc.state_dict() if hasattr(net, 'fc') else {}
+            ckpt = {
+                'task': self._cur_task,
+                'args': self.args,
+                'backbone_state': backbone_state,
+                'fc_state': fc_state,
+            }
+            torch.save(ckpt, ckpt_path)
+            logging.info(f"Saved task checkpoint to: {ckpt_path}")
+        except Exception as e:
+            logging.warning(f"Failed to save task checkpoint: {e}")
 
     def _update_representation(self, train_loader, test_loader, optimizer, scheduler):
         prog_bar = tqdm(range(self.args["epochs"]))
