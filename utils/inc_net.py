@@ -19,6 +19,16 @@ def get_backbone(args, pretrained=False):
         model.out_dim = 768
         return model
 
+    ## SD-Adapter version
+    elif name == "vit_base_patch16_224_sdadapter":
+        from backbone.adapter import SDAdapter_ViT_timm
+        model = timm.create_model("vit_base_patch16_224", pretrained=True, num_classes=0)
+        per_layer_scaling = args.get('per_layer_scaling', False)
+        adapter_rank = args.get('adapter_rank', 64)
+        model = SDAdapter_ViT_timm(vit_model=model.eval(), r=adapter_rank, num_classes=10, increment=args['increment'], filepath=args['filepath'], per_layer_scaling=per_layer_scaling)
+        model.out_dim = 768
+        return model
+
     elif name == "pretrained_vit_b16_224_in21k" or name == "vit_base_patch16_224_in21k":
         model = timm.create_model("vit_base_patch16_224_in21k",pretrained=True, num_classes=0)
         model.out_dim = 768
