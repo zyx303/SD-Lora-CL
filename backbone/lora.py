@@ -131,7 +131,7 @@ class _LoRA_qkv_timm(nn.Module):
     
 class _LoRA_qkv_timm_train(nn.Module):
     def __init__(self, qkv, linear_a_q, linear_b_q, linear_a_v, linear_b_v, #linear_a_q1, linear_b_q1, linear_a_v1, linear_b_v1,
-        task_id, saved_A, saved_B, t_layer_i, rank, scaling_factor, scaling_factor_prev, eval1=False):
+        task_id, saved_A, saved_B, t_layer_i, rank, scaling_factor, scaling_factor_prev, eval1=False, per_layer_scaling=False):
         super().__init__()
         self.linear_a_q = linear_a_q.cuda()
         self.linear_b_q = linear_b_q.cuda()
@@ -149,6 +149,7 @@ class _LoRA_qkv_timm_train(nn.Module):
         self.t_layer_i = t_layer_i
         self.rank = rank
         self.eval = eval1
+        self.per_layer_scaling = per_layer_scaling
 
     def forward(self, x):
 
@@ -179,16 +180,20 @@ class _LoRA_qkv_timm_train(nn.Module):
             w_b_linear_v.to(x.device)
 
 
+            # Select scaling factor based on per_layer_scaling setting
+            scale_idx = self.t_layer_i if self.per_layer_scaling else 0
             if i ==0 :
-                new_q = self.scaling_factor_prev[i]( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
-                new_v = self.scaling_factor_prev[i]( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
+                new_q = self.scaling_factor_prev[i][scale_idx]( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
+                new_v = self.scaling_factor_prev[i][scale_idx]( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
             else:
 
-                new_q += self.scaling_factor_prev[i]( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
-                new_v += self.scaling_factor_prev[i]( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
+                new_q += self.scaling_factor_prev[i][scale_idx]( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
+                new_v += self.scaling_factor_prev[i][scale_idx]( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
 
-        new_q += self.scaling_factor[0]( self.linear_b_q(self.linear_a_q(x)) )
-        new_v += self.scaling_factor[0]( self.linear_b_v(self.linear_a_v(x)) )
+        # Use per-layer or global scaling factor for current task
+        scale_idx = self.t_layer_i if self.per_layer_scaling else 0
+        new_q += self.scaling_factor[scale_idx]( self.linear_b_q(self.linear_a_q(x)) )
+        new_v += self.scaling_factor[scale_idx]( self.linear_b_v(self.linear_a_v(x)) )
         qkv = self.qkv(x) 
         qkv[:, :, : self.dim] += new_q
         qkv[:, :, -self.dim :] += new_v
@@ -202,7 +207,7 @@ class _LoRA_qkv_timm_eval(nn.Module):
     qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, self.head_dim).permute(2, 0, 3, 1, 4)
     q, k, v = qkv.unbind(0)
     """
-    def __init__(self, task_id, qkv: nn.Module, saved_A, saved_B, t_layer_i, rank, scaling_factor,  scaling_factor_prev, save_file):
+    def __init__(self, task_id, qkv: nn.Module, saved_A, saved_B, t_layer_i, rank, scaling_factor,  scaling_factor_prev, save_file, per_layer_scaling=False):
         super().__init__()
         self.task_id = task_id
         self.qkv = qkv
@@ -215,6 +220,7 @@ class _LoRA_qkv_timm_eval(nn.Module):
         self.save_file = save_file
         self.scaling_factor = scaling_factor.cuda()
         self.scaling_factor_prev = scaling_factor_prev.cuda()
+        self.per_layer_scaling = per_layer_scaling
 
 
     def forward(self, x):
@@ -239,15 +245,19 @@ class _LoRA_qkv_timm_eval(nn.Module):
             w_a_linear_v.weight = Parameter(A_v.weight)
             w_b_linear_v.weight = Parameter(B_v.weight)
 
+            # Select scaling factor based on per_layer_scaling setting
+            scale_idx = self.t_layer_i if self.per_layer_scaling else 0
             if i ==0 :
-                new_q = self.scaling_factor_prev[i]( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
-                new_v = self.scaling_factor_prev[i]( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
+                new_q = self.scaling_factor_prev[i][scale_idx]( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
+                new_v = self.scaling_factor_prev[i][scale_idx]( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
             else:
-                new_q += self.scaling_factor_prev[i]( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
-                new_v += self.scaling_factor_prev[i]( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
+                new_q += self.scaling_factor_prev[i][scale_idx]( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
+                new_v += self.scaling_factor_prev[i][scale_idx]( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
 
-        new_q = self.scaling_factor[0]( w_b_linear_q(w_a_linear_q(x)) )
-        new_v = self.scaling_factor[0]( w_b_linear_v(w_a_linear_v(x)) )
+        # Use per-layer or global scaling factor for current task
+        scale_idx = self.t_layer_i if self.per_layer_scaling else 0
+        new_q = self.scaling_factor[scale_idx]( w_b_linear_q(w_a_linear_q(x)) )
+        new_v = self.scaling_factor[scale_idx]( w_b_linear_v(w_a_linear_v(x)) )
  
         qkv = self.qkv(x) 
         qkv[:, :, : self.dim] += new_q
@@ -276,12 +286,13 @@ class MyLinear(nn.Module):
 
 
 class LoRA_ViT_timm(nn.Module):
-    def __init__(self, vit_model: timm_ViT, r: int, num_classes: int = 0, increment=10, filepath = './', lora_layer=None, eval=False, index=True, cur_task_index=None):
+    def __init__(self, vit_model: timm_ViT, r: int, num_classes: int = 0, increment=10, filepath = './', lora_layer=None, eval=False, index=True, cur_task_index=None, per_layer_scaling=False):
         super(LoRA_ViT_timm, self).__init__()
 
         assert r > 0
         self.rank =r
         self.base_vit = copy.deepcopy(vit_model)
+        self.per_layer_scaling = per_layer_scaling
         
 
 
@@ -323,9 +334,22 @@ class LoRA_ViT_timm(nn.Module):
             file_path = self.save_file+'lora_w_b_'+str(i)+'.pt'
             saved_lora_B['saved_B_'+str(i)] = torch.load(file_path)
 
-        scaling_factor = nn.Parameter(torch.Tensor([0.8]))
-        self.wrapped_param = nn.ModuleList([ParameterWrapper(scaling_factor)])
-        self.wrapped_param_prev = nn.ModuleList([ParameterWrapper(nn.Parameter(torch.Tensor([0.8]))) for _ in range(20)])
+        # Determine number of layers
+        self.num_lora_layers = len(self.lora_layer)
+        
+        # Create scaling factors: per-layer or global
+        if self.per_layer_scaling:
+            # Each layer has its own scaling factor
+            self.wrapped_param = nn.ModuleList([ParameterWrapper(nn.Parameter(torch.Tensor([0.8]))) for _ in range(self.num_lora_layers)])
+            self.wrapped_param_prev = nn.ModuleList([
+                nn.ModuleList([ParameterWrapper(nn.Parameter(torch.Tensor([0.8]))) for _ in range(self.num_lora_layers)])
+                for _ in range(20)
+            ])
+        else:
+            # All layers share one scaling factor (original behavior)
+            scaling_factor = nn.Parameter(torch.Tensor([0.8]))
+            self.wrapped_param = nn.ModuleList([ParameterWrapper(scaling_factor)])
+            self.wrapped_param_prev = nn.ModuleList([ParameterWrapper(nn.Parameter(torch.Tensor([0.8]))) for _ in range(20)])
 
         # Do the surgery 
         for t_layer_i, blk in enumerate(vit_model.blocks):
@@ -347,10 +371,10 @@ class LoRA_ViT_timm(nn.Module):
             if not eval:
                 blk.attn.qkv = _LoRA_qkv_timm_train(
                     w_qkv_linear, w_a_linear_q, w_b_linear_q, w_a_linear_v, w_b_linear_v, 
-                    self.task_id, saved_lora_A, saved_lora_B, t_layer_i, self.rank , self.wrapped_param, self.wrapped_param_prev, eval1=False
+                    self.task_id, saved_lora_A, saved_lora_B, t_layer_i, self.rank , self.wrapped_param, self.wrapped_param_prev, eval1=False, per_layer_scaling=self.per_layer_scaling
                 )
             else:
-                blk.attn.qkv = _LoRA_qkv_timm_eval(self.task_id, w_qkv_linear, saved_lora_A, saved_lora_B, t_layer_i, self.rank, self.wrapped_param, self.wrapped_param_prev, self.save_file) 
+                blk.attn.qkv = _LoRA_qkv_timm_eval(self.task_id, w_qkv_linear, saved_lora_A, saved_lora_B, t_layer_i, self.rank, self.wrapped_param, self.wrapped_param_prev, self.save_file, per_layer_scaling=self.per_layer_scaling) 
 
         self.reset_parameters()
         self.lora_vit = vit_model
@@ -385,18 +409,36 @@ class LoRA_ViT_timm(nn.Module):
 
 
     def save_wrap_param(self, filename):
-        if self.task_id ==1:   
-            scaling_param = torch.zeros(20,20)
-        else:
-            scaling_param = torch.load(filename + 'scaling_factor'+str(self.task_id-2)+'.pt')
-        i = self.task_id-1
-        # print('save i', i)
-        for j in range(i+1):
-            if j == i:
-                scaling_param[i][j] = self.wrapped_param[0].param.detach().clone()
+        if self.per_layer_scaling:
+            # Save per-layer scaling factors
+            if self.task_id == 1:
+                # Shape: (num_layers, 20, 20) for per-layer scaling
+                scaling_param = torch.zeros(self.num_lora_layers, 20, 20)
             else:
-                scaling_param[i][j] = self.wrapped_param_prev[j].param.detach().clone()
-        torch.save(scaling_param, filename + 'scaling_factor'+str(self.task_id-1)+'.pt')
+                scaling_param = torch.load(filename + 'scaling_factor'+str(self.task_id-2)+'.pt')
+            
+            i = self.task_id - 1
+            for layer_idx in range(self.num_lora_layers):
+                for j in range(i+1):
+                    if j == i:
+                        scaling_param[layer_idx][i][j] = self.wrapped_param[layer_idx].param.item()
+                    else:
+                        scaling_param[layer_idx][i][j] = self.wrapped_param_prev[j][layer_idx].param.item()
+            torch.save(scaling_param, filename + 'scaling_factor'+str(self.task_id-1)+'.pt')
+        else:
+            # Original behavior: global scaling factor
+            if self.task_id ==1:   
+                scaling_param = torch.zeros(20,20)
+            else:
+                scaling_param = torch.load(filename + 'scaling_factor'+str(self.task_id-2)+'.pt')
+            i = self.task_id-1
+            # print('save i', i)
+            for j in range(i+1):
+                if j == i:
+                    scaling_param[i][j] = self.wrapped_param[0].param.item()
+                else:
+                    scaling_param[i][j] = self.wrapped_param_prev[j].param.item()
+            torch.save(scaling_param, filename + 'scaling_factor'+str(self.task_id-1)+'.pt')
         
     def save_lora_parameters(self, filename: str, task_id) -> None:
         self.task_id += 1
@@ -426,7 +468,7 @@ class LoRA_ViT_timm(nn.Module):
         for t_layer_i, blk in enumerate(self.lora_vit.blocks):
             w_qkv_linear = blk.attn.qkv
             self.dim = w_qkv_linear.in_features
-            blk.attn.qkv = _LoRA_qkv_timm_eval(self.task_id, w_qkv_linear, saved_lora_A, saved_lora_B, t_layer_i, self.rank)    
+            blk.attn.qkv = _LoRA_qkv_timm_eval(self.task_id, w_qkv_linear, saved_lora_A, saved_lora_B, t_layer_i, self.rank, self.wrapped_param, self.wrapped_param_prev, self.save_file, per_layer_scaling=self.per_layer_scaling)    
         self.reset_lora_vit_head()
 
     def compute_ortho_loss(self):

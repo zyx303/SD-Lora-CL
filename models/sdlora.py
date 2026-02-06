@@ -85,8 +85,10 @@ class Learner(BaseLearner):
             rank = 10
         '''
         rank=10
+        # Get per_layer_scaling config from args (default: False for backward compatibility)
+        per_layer_scaling = self.args.get('per_layer_scaling', False)
         model = LoRA_ViT_timm(vit_model=model.eval(), r=rank, num_classes=10, index=index, increment= self.args['increment'], filepath=self.args['filepath'], 
-        cur_task_index= self._cur_task)
+        cur_task_index= self._cur_task, per_layer_scaling=per_layer_scaling)
         model.out_dim = 768
         return model
 
