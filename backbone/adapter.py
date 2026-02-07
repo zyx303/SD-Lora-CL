@@ -83,15 +83,23 @@ class _Adapter_MLP_train(nn.Module):
             norm_factor = torch.norm(temp_down.weight) * torch.norm(temp_up.weight)
             adapter_out = adapter_out / norm_factor
 
-            scale_idx = self.t_layer_i if self.per_layer_scaling else 0
-            if i == 0:
-                new_adapter = self.scaling_factor_prev[i][scale_idx](adapter_out)
+            # Get scaling function: per-layer uses nested ModuleList, global uses flat list
+            if self.per_layer_scaling:
+                prev_scale_fn = self.scaling_factor_prev[i][self.t_layer_i]
             else:
-                new_adapter += self.scaling_factor_prev[i][scale_idx](adapter_out)
+                prev_scale_fn = self.scaling_factor_prev[i]
+
+            if i == 0:
+                new_adapter = prev_scale_fn(adapter_out)
+            else:
+                new_adapter += prev_scale_fn(adapter_out)
 
         # Current task adapter (not normalized, raw magnitude)
-        scale_idx = self.t_layer_i if self.per_layer_scaling else 0
-        new_adapter += self.scaling_factor[scale_idx](
+        if self.per_layer_scaling:
+            cur_scale_fn = self.scaling_factor[self.t_layer_i]
+        else:
+            cur_scale_fn = self.scaling_factor[0]
+        new_adapter += cur_scale_fn(
             self.adapter_up(F.relu(self.adapter_down(x)))
         )
 
@@ -140,15 +148,23 @@ class _Adapter_MLP_eval(nn.Module):
             norm_factor = torch.norm(temp_down.weight) * torch.norm(temp_up.weight)
             adapter_out = adapter_out / norm_factor
 
-            scale_idx = self.t_layer_i if self.per_layer_scaling else 0
-            if i == 0:
-                new_adapter = self.scaling_factor_prev[i][scale_idx](adapter_out)
+            # Get scaling function: per-layer uses nested ModuleList, global uses flat list
+            if self.per_layer_scaling:
+                prev_scale_fn = self.scaling_factor_prev[i][self.t_layer_i]
             else:
-                new_adapter += self.scaling_factor_prev[i][scale_idx](adapter_out)
+                prev_scale_fn = self.scaling_factor_prev[i]
+
+            if i == 0:
+                new_adapter = prev_scale_fn(adapter_out)
+            else:
+                new_adapter += prev_scale_fn(adapter_out)
 
         # Last task contribution with current scaling factor
-        scale_idx = self.t_layer_i if self.per_layer_scaling else 0
-        new_adapter = self.scaling_factor[scale_idx](
+        if self.per_layer_scaling:
+            cur_scale_fn = self.scaling_factor[self.t_layer_i]
+        else:
+            cur_scale_fn = self.scaling_factor[0]
+        new_adapter = cur_scale_fn(
             temp_up(F.relu(temp_down(x)))
         )
 
