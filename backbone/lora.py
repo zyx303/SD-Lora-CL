@@ -181,19 +181,25 @@ class _LoRA_qkv_timm_train(nn.Module):
 
 
             # Select scaling factor based on per_layer_scaling setting
-            scale_idx = self.t_layer_i if self.per_layer_scaling else 0
+            if self.per_layer_scaling:
+                sf_prev = self.scaling_factor_prev[i][self.t_layer_i]
+            else:
+                sf_prev = self.scaling_factor_prev[i]
             if i ==0 :
-                new_q = self.scaling_factor_prev[i][scale_idx]( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
-                new_v = self.scaling_factor_prev[i][scale_idx]( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
+                new_q = sf_prev( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
+                new_v = sf_prev( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
             else:
 
-                new_q += self.scaling_factor_prev[i][scale_idx]( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
-                new_v += self.scaling_factor_prev[i][scale_idx]( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
+                new_q += sf_prev( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
+                new_v += sf_prev( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
 
         # Use per-layer or global scaling factor for current task
-        scale_idx = self.t_layer_i if self.per_layer_scaling else 0
-        new_q += self.scaling_factor[scale_idx]( self.linear_b_q(self.linear_a_q(x)) )
-        new_v += self.scaling_factor[scale_idx]( self.linear_b_v(self.linear_a_v(x)) )
+        if self.per_layer_scaling:
+            sf_cur = self.scaling_factor[self.t_layer_i]
+        else:
+            sf_cur = self.scaling_factor[0]
+        new_q += sf_cur( self.linear_b_q(self.linear_a_q(x)) )
+        new_v += sf_cur( self.linear_b_v(self.linear_a_v(x)) )
         qkv = self.qkv(x) 
         qkv[:, :, : self.dim] += new_q
         qkv[:, :, -self.dim :] += new_v
@@ -246,18 +252,24 @@ class _LoRA_qkv_timm_eval(nn.Module):
             w_b_linear_v.weight = Parameter(B_v.weight)
 
             # Select scaling factor based on per_layer_scaling setting
-            scale_idx = self.t_layer_i if self.per_layer_scaling else 0
-            if i ==0 :
-                new_q = self.scaling_factor_prev[i][scale_idx]( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
-                new_v = self.scaling_factor_prev[i][scale_idx]( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
+            if self.per_layer_scaling:
+                sf_prev = self.scaling_factor_prev[i][self.t_layer_i]
             else:
-                new_q += self.scaling_factor_prev[i][scale_idx]( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
-                new_v += self.scaling_factor_prev[i][scale_idx]( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
+                sf_prev = self.scaling_factor_prev[i]
+            if i ==0 :
+                new_q = sf_prev( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
+                new_v = sf_prev( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
+            else:
+                new_q += sf_prev( w_b_linear_q(w_a_linear_q(x))/ (torch.norm(w_b_linear_q.weight)* torch.norm(w_a_linear_q.weight) )  )
+                new_v += sf_prev( w_b_linear_v(w_a_linear_v(x))/ (torch.norm(w_b_linear_v.weight)* torch.norm(w_a_linear_v.weight) )  )
 
         # Use per-layer or global scaling factor for current task
-        scale_idx = self.t_layer_i if self.per_layer_scaling else 0
-        new_q = self.scaling_factor[scale_idx]( w_b_linear_q(w_a_linear_q(x)) )
-        new_v = self.scaling_factor[scale_idx]( w_b_linear_v(w_a_linear_v(x)) )
+        if self.per_layer_scaling:
+            sf_cur = self.scaling_factor[self.t_layer_i]
+        else:
+            sf_cur = self.scaling_factor[0]
+        new_q = sf_cur( w_b_linear_q(w_a_linear_q(x)) )
+        new_v = sf_cur( w_b_linear_v(w_a_linear_v(x)) )
  
         qkv = self.qkv(x) 
         qkv[:, :, : self.dim] += new_q
