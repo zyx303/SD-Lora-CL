@@ -13,7 +13,7 @@
     "optimizer": "adam",
     "scheduler": "constant",
     "filepath": "./checkpoints/ImageNetR3/",
-    "seed": [1995],
+    "seed": [1996,1997,1998],
     "init_epoch": 20,
     "init_lr": 1e-2,
     "init_milestones": [10000],

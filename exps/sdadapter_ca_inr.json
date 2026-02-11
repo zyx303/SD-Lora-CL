@@ -1,5 +1,5 @@
 {
-    "prefix": "reproduce",
+    "prefix": "expand",
     "dataset": "imagenetr",
     "memory_size": 0,
     "memory_per_class": 0,
@@ -7,14 +7,14 @@
     "shuffle": true,
     "init_cls": 20,
     "increment": 20,
-    "model_name": "sdadapter",
+    "model_name": "sdadapter_ca",
     "backbone_type": "vit_base_patch16_224_sdadapter",
     "adapter_rank": 64,
     "device": ["0"],
     "optimizer": "adam",
     "scheduler": "constant",
-    "filepath": "./checkpoints/ImageNetR3_adapter/",
-    "seed": [1995,1996,1997,1998],
+    "filepath": "./checkpoints/ImageNetR3_adapter_CA/",
+    "seed": [1995],
     "init_epoch": 20,
     "init_lr": 0.01,
     "init_milestones": [10000],
@@ -26,5 +26,10 @@
     "lrate_decay": 0,
     "batch_size": 128,
     "weight_decay": 0.0002,
-    "per_layer_scaling": false
+    "per_layer_scaling": false,
+
+    "ca_epochs": 5,
+    "ca_lr": 0.01,
+    "ca_num_samples": 256,
+    "logit_norm": 0.1
 }

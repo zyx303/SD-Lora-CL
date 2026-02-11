@@ -1,0 +1,423 @@
+2026-02-10 22:13:50,217 [trainer.py] => config: ./exps/sdadapter_inr.json
+2026-02-10 22:13:50,217 [trainer.py] => seed: 1995
+2026-02-10 22:13:50,217 [trainer.py] => prefix: reproduce
+2026-02-10 22:13:50,217 [trainer.py] => dataset: imagenetr
+2026-02-10 22:13:50,217 [trainer.py] => memory_size: 0
+2026-02-10 22:13:50,217 [trainer.py] => memory_per_class: 0
+2026-02-10 22:13:50,218 [trainer.py] => fixed_memory: False
+2026-02-10 22:13:50,218 [trainer.py] => shuffle: True
+2026-02-10 22:13:50,218 [trainer.py] => init_cls: 20
+2026-02-10 22:13:50,218 [trainer.py] => increment: 20
+2026-02-10 22:13:50,218 [trainer.py] => model_name: sdadapter
+2026-02-10 22:13:50,218 [trainer.py] => backbone_type: vit_base_patch16_224_sdadapter
+2026-02-10 22:13:50,218 [trainer.py] => adapter_rank: 64
+2026-02-10 22:13:50,218 [trainer.py] => device: [device(type='cuda', index=0)]
+2026-02-10 22:13:50,218 [trainer.py] => optimizer: adam
+2026-02-10 22:13:50,218 [trainer.py] => scheduler: constant
+2026-02-10 22:13:50,218 [trainer.py] => filepath: ./out/ImageNetR3_adapter/
+2026-02-10 22:13:50,218 [trainer.py] => init_epoch: 20
+2026-02-10 22:13:50,218 [trainer.py] => init_lr: 0.01
+2026-02-10 22:13:50,218 [trainer.py] => init_milestones: [10000]
+2026-02-10 22:13:50,218 [trainer.py] => init_lr_decay: 0
+2026-02-10 22:13:50,218 [trainer.py] => init_weight_decay: 0.0005
+2026-02-10 22:13:50,218 [trainer.py] => epochs: 20
+2026-02-10 22:13:50,218 [trainer.py] => lrate: 0.01
+2026-02-10 22:13:50,218 [trainer.py] => milestones: [10000]
+2026-02-10 22:13:50,218 [trainer.py] => lrate_decay: 0
+2026-02-10 22:13:50,218 [trainer.py] => batch_size: 128
+2026-02-10 22:13:50,218 [trainer.py] => weight_decay: 0.0002
+2026-02-10 22:13:50,218 [trainer.py] => per_layer_scaling: False
+2026-02-10 22:13:50,270 [data_manager.py] => [146, 198, 169, 126, 142, 183, 108, 86, 79, 35, 112, 29, 0, 2, 59, 178, 143, 31, 147, 33, 123, 114, 194, 54, 138, 75, 158, 26, 131, 141, 180, 132, 22, 49, 116, 111, 24, 98, 107, 89, 151, 83, 185, 15, 27, 136, 65, 1, 82, 87, 99, 153, 47, 144, 145, 175, 155, 77, 191, 199, 46, 28, 76, 71, 93, 137, 5, 188, 187, 74, 103, 173, 18, 80, 88, 48, 109, 81, 91, 101, 43, 102, 61, 182, 3, 14, 40, 42, 167, 66, 57, 73, 135, 39, 45, 184, 161, 85, 148, 121, 8, 195, 21, 4, 106, 133, 118, 10, 176, 50, 36, 192, 162, 172, 96, 197, 20, 117, 140, 186, 92, 97, 44, 149, 13, 37, 170, 25, 181, 171, 23, 104, 189, 11, 159, 67, 94, 68, 55, 6, 150, 165, 120, 139, 72, 154, 115, 125, 53, 58, 16, 113, 41, 190, 174, 127, 110, 7, 38, 32, 95, 19, 196, 51, 78, 34, 122, 152, 119, 134, 129, 130, 128, 17, 30, 90, 124, 160, 100, 193, 12, 56, 64, 168, 105, 63, 177, 70, 60, 163, 9, 62, 156, 52, 84, 157, 69, 179, 166, 164]
+2026-02-10 22:13:51,717 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-10 22:13:52,143 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-10 22:14:27,380 [trainer.py] => All params: 172776981
+2026-02-10 22:14:27,382 [trainer.py] => Trainable params: 1179669
+2026-02-10 22:14:27,382 [sdadapter.py] => Learning on 0-20
+2026-02-10 22:17:09,265 [sdadapter.py] => Task 0, Epoch 20/20 => Loss 0.230, Train_accy 93.32
+2026-02-10 22:17:09,973 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_0.pt
+2026-02-10 22:17:11,779 [trainer.py] => No NME accuracy.
+2026-02-10 22:17:11,779 [trainer.py] => CNN: {'total': np.float64(92.06), '00-19': np.float64(92.06), 'old': 0, 'new': np.float64(92.06)}
+2026-02-10 22:17:11,779 [trainer.py] => CNN top1 curve: [np.float64(92.06)]
+2026-02-10 22:17:11,779 [trainer.py] => CNN top5 curve: [np.float64(97.73)]
+
+2026-02-10 22:17:11,779 [trainer.py] => Average Accuracy (CNN): 92.06 
+
+2026-02-10 22:17:11,781 [trainer.py] => All params: 172792361
+2026-02-10 22:17:11,781 [trainer.py] => Trainable params: 1195049
+2026-02-10 22:17:11,782 [sdadapter.py] => Learning on 20-40
+2026-02-10 22:17:12,540 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-10 22:17:12,768 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-10 22:20:12,933 [sdadapter.py] => Task 1, Epoch 20/20 => Loss 0.224, Train_accy 91.97
+2026-02-10 22:20:13,724 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_1.pt
+2026-02-10 22:20:16,591 [trainer.py] => No NME accuracy.
+2026-02-10 22:20:16,592 [trainer.py] => CNN: {'total': np.float64(86.37), '00-19': np.float64(79.9), '20-39': np.float64(92.1), 'old': np.float64(79.9), 'new': np.float64(92.1)}
+2026-02-10 22:20:16,592 [trainer.py] => CNN top1 curve: [np.float64(92.06), np.float64(86.37)]
+2026-02-10 22:20:16,592 [trainer.py] => CNN top5 curve: [np.float64(97.73), np.float64(96.5)]
+
+2026-02-10 22:20:16,592 [trainer.py] => Average Accuracy (CNN): 89.215 
+
+2026-02-10 22:20:16,596 [trainer.py] => All params: 172807741
+2026-02-10 22:20:16,600 [trainer.py] => Trainable params: 1210429
+2026-02-10 22:20:16,602 [sdadapter.py] => Learning on 40-60
+2026-02-10 22:20:17,440 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-10 22:20:17,680 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-10 22:23:30,179 [sdadapter.py] => Task 2, Epoch 20/20 => Loss 0.203, Train_accy 91.90
+2026-02-10 22:23:31,185 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_2.pt
+2026-02-10 22:23:35,043 [trainer.py] => No NME accuracy.
+2026-02-10 22:23:35,044 [trainer.py] => CNN: {'total': np.float64(81.43), '00-19': np.float64(76.18), '20-39': np.float64(77.87), '40-59': np.float64(90.26), 'old': np.float64(77.08), 'new': np.float64(90.26)}
+2026-02-10 22:23:35,044 [trainer.py] => CNN top1 curve: [np.float64(92.06), np.float64(86.37), np.float64(81.43)]
+2026-02-10 22:23:35,044 [trainer.py] => CNN top5 curve: [np.float64(97.73), np.float64(96.5), np.float64(94.39)]
+
+2026-02-10 22:23:35,044 [trainer.py] => Average Accuracy (CNN): 86.62 
+
+2026-02-10 22:23:35,049 [trainer.py] => All params: 172823121
+2026-02-10 22:23:35,052 [trainer.py] => Trainable params: 1225809
+2026-02-10 22:23:35,055 [sdadapter.py] => Learning on 60-80
+2026-02-10 22:23:35,997 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-10 22:23:36,225 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-10 22:27:07,227 [sdadapter.py] => Task 3, Epoch 20/20 => Loss 0.220, Train_accy 90.48
+2026-02-10 22:27:08,313 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_3.pt
+2026-02-10 22:27:13,521 [trainer.py] => No NME accuracy.
+2026-02-10 22:27:13,521 [trainer.py] => CNN: {'total': np.float64(79.44), '00-19': np.float64(75.04), '20-39': np.float64(76.58), '40-59': np.float64(74.03), '60-79': np.float64(91.75), 'old': np.float64(75.26), 'new': np.float64(91.75)}
+2026-02-10 22:27:13,522 [trainer.py] => CNN top1 curve: [np.float64(92.06), np.float64(86.37), np.float64(81.43), np.float64(79.44)]
+2026-02-10 22:27:13,522 [trainer.py] => CNN top5 curve: [np.float64(97.73), np.float64(96.5), np.float64(94.39), np.float64(92.77)]
+
+2026-02-10 22:27:13,522 [trainer.py] => Average Accuracy (CNN): 84.825 
+
+2026-02-10 22:27:13,527 [trainer.py] => All params: 172838501
+2026-02-10 22:27:13,529 [trainer.py] => Trainable params: 1241189
+2026-02-10 22:27:13,532 [sdadapter.py] => Learning on 80-100
+2026-02-10 22:27:14,408 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-10 22:27:14,659 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-10 22:29:46,464 [sdadapter.py] => Task 4, Epoch 20/20 => Loss 0.199, Train_accy 89.26
+2026-02-10 22:29:47,552 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_4.pt
+2026-02-10 22:29:53,550 [trainer.py] => No NME accuracy.
+2026-02-10 22:29:53,550 [trainer.py] => CNN: {'total': np.float64(79.06), '00-19': np.float64(76.34), '20-39': np.float64(77.87), '40-59': np.float64(78.05), '60-79': np.float64(78.26), '80-99': np.float64(88.25), 'old': np.float64(77.66), 'new': np.float64(88.25)}
+2026-02-10 22:29:53,551 [trainer.py] => CNN top1 curve: [np.float64(92.06), np.float64(86.37), np.float64(81.43), np.float64(79.44), np.float64(79.06)]
+2026-02-10 22:29:53,551 [trainer.py] => CNN top5 curve: [np.float64(97.73), np.float64(96.5), np.float64(94.39), np.float64(92.77), np.float64(92.04)]
+
+2026-02-10 22:29:53,551 [trainer.py] => Average Accuracy (CNN): 83.672 
+
+2026-02-10 22:29:53,556 [trainer.py] => All params: 172853881
+2026-02-10 22:29:53,559 [trainer.py] => Trainable params: 1256569
+2026-02-10 22:29:53,562 [sdadapter.py] => Learning on 100-120
+2026-02-10 22:29:54,412 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-10 22:29:54,641 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-10 22:33:44,432 [sdadapter.py] => Task 5, Epoch 20/20 => Loss 0.237, Train_accy 89.35
+2026-02-10 22:33:45,507 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_5.pt
+2026-02-10 22:33:52,750 [trainer.py] => No NME accuracy.
+2026-02-10 22:33:52,751 [trainer.py] => CNN: {'total': np.float64(77.15), '00-19': np.float64(75.36), '20-39': np.float64(75.0), '40-59': np.float64(72.33), '60-79': np.float64(70.91), '80-99': np.float64(79.5), '100-119': np.float64(91.09), 'old': np.float64(74.2), 'new': np.float64(91.09)}
+2026-02-10 22:33:52,751 [trainer.py] => CNN top1 curve: [np.float64(92.06), np.float64(86.37), np.float64(81.43), np.float64(79.44), np.float64(79.06), np.float64(77.15)]
+2026-02-10 22:33:52,751 [trainer.py] => CNN top5 curve: [np.float64(97.73), np.float64(96.5), np.float64(94.39), np.float64(92.77), np.float64(92.04), np.float64(91.36)]
+
+2026-02-10 22:33:52,751 [trainer.py] => Average Accuracy (CNN): 82.585 
+
+2026-02-10 22:33:52,752 [trainer.py] => All params: 172869261
+2026-02-10 22:33:52,753 [trainer.py] => Trainable params: 1271949
+2026-02-10 22:33:52,755 [sdadapter.py] => Learning on 120-140
+2026-02-10 22:33:53,501 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-10 22:33:53,748 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-10 22:37:29,641 [sdadapter.py] => Task 6, Epoch 20/20 => Loss 0.231, Train_accy 87.24
+2026-02-10 22:37:30,656 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_6.pt
+2026-02-10 22:37:39,088 [trainer.py] => No NME accuracy.
+2026-02-10 22:37:39,088 [trainer.py] => CNN: {'total': np.float64(75.04), '00-19': np.float64(74.39), '20-39': np.float64(72.27), '40-59': np.float64(73.72), '60-79': np.float64(70.01), '80-99': np.float64(77.0), '100-119': np.float64(74.22), '120-139': np.float64(87.18), 'old': np.float64(73.33), 'new': np.float64(87.18)}
+2026-02-10 22:37:39,089 [trainer.py] => CNN top1 curve: [np.float64(92.06), np.float64(86.37), np.float64(81.43), np.float64(79.44), np.float64(79.06), np.float64(77.15), np.float64(75.04)]
+2026-02-10 22:37:39,089 [trainer.py] => CNN top5 curve: [np.float64(97.73), np.float64(96.5), np.float64(94.39), np.float64(92.77), np.float64(92.04), np.float64(91.36), np.float64(90.87)]
+
+2026-02-10 22:37:39,089 [trainer.py] => Average Accuracy (CNN): 81.50714285714285 
+
+2026-02-10 22:37:39,094 [trainer.py] => All params: 172884641
+2026-02-10 22:37:39,097 [trainer.py] => Trainable params: 1287329
+2026-02-10 22:37:39,101 [sdadapter.py] => Learning on 140-160
+2026-02-10 22:37:40,067 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-10 22:37:43,090 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-10 22:41:33,076 [sdadapter.py] => Task 7, Epoch 20/20 => Loss 0.206, Train_accy 89.84
+2026-02-10 22:41:34,149 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_7.pt
+2026-02-10 22:41:44,070 [trainer.py] => No NME accuracy.
+2026-02-10 22:41:44,071 [trainer.py] => CNN: {'total': np.float64(75.61), '00-19': np.float64(73.42), '20-39': np.float64(72.41), '40-59': np.float64(72.49), '60-79': np.float64(73.46), '80-99': np.float64(75.5), '100-119': np.float64(77.34), '120-139': np.float64(69.13), '140-159': np.float64(92.04), 'old': np.float64(73.39), 'new': np.float64(92.04)}
+2026-02-10 22:41:44,071 [trainer.py] => CNN top1 curve: [np.float64(92.06), np.float64(86.37), np.float64(81.43), np.float64(79.44), np.float64(79.06), np.float64(77.15), np.float64(75.04), np.float64(75.61)]
+2026-02-10 22:41:44,071 [trainer.py] => CNN top5 curve: [np.float64(97.73), np.float64(96.5), np.float64(94.39), np.float64(92.77), np.float64(92.04), np.float64(91.36), np.float64(90.87), np.float64(90.58)]
+
+2026-02-10 22:41:44,071 [trainer.py] => Average Accuracy (CNN): 80.77 
+
+2026-02-10 22:41:44,076 [trainer.py] => All params: 172900021
+2026-02-10 22:41:44,079 [trainer.py] => Trainable params: 1302709
+2026-02-10 22:41:44,084 [sdadapter.py] => Learning on 160-180
+2026-02-10 22:41:44,921 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-10 22:41:47,698 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-10 22:46:14,640 [sdadapter.py] => Task 8, Epoch 20/20 => Loss 0.240, Train_accy 87.41
+2026-02-10 22:46:15,720 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_8.pt
+2026-02-10 22:46:26,937 [trainer.py] => No NME accuracy.
+2026-02-10 22:46:26,938 [trainer.py] => CNN: {'total': np.float64(74.41), '00-19': np.float64(70.99), '20-39': np.float64(72.41), '40-59': np.float64(72.18), '60-79': np.float64(68.52), '80-99': np.float64(75.5), '100-119': np.float64(75.0), '120-139': np.float64(68.54), '140-159': np.float64(81.59), '160-179': np.float64(86.12), 'old': np.float64(72.93), 'new': np.float64(86.12)}
+2026-02-10 22:46:26,938 [trainer.py] => CNN top1 curve: [np.float64(92.06), np.float64(86.37), np.float64(81.43), np.float64(79.44), np.float64(79.06), np.float64(77.15), np.float64(75.04), np.float64(75.61), np.float64(74.41)]
+2026-02-10 22:46:26,938 [trainer.py] => CNN top5 curve: [np.float64(97.73), np.float64(96.5), np.float64(94.39), np.float64(92.77), np.float64(92.04), np.float64(91.36), np.float64(90.87), np.float64(90.58), np.float64(89.78)]
+
+2026-02-10 22:46:26,938 [trainer.py] => Average Accuracy (CNN): 80.06333333333333 
+
+2026-02-10 22:46:26,943 [trainer.py] => All params: 172915401
+2026-02-10 22:46:26,946 [trainer.py] => Trainable params: 1318089
+2026-02-10 22:46:26,950 [sdadapter.py] => Learning on 180-200
+2026-02-10 22:46:27,999 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-10 22:46:31,247 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-10 22:51:32,337 [sdadapter.py] => Task 9, Epoch 20/20 => Loss 0.203, Train_accy 88.37
+2026-02-10 22:51:33,339 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_9.pt
+2026-02-10 22:51:46,379 [trainer.py] => No NME accuracy.
+2026-02-10 22:51:46,380 [trainer.py] => CNN: {'total': np.float64(74.95), '00-19': np.float64(72.61), '20-39': np.float64(72.7), '40-59': np.float64(69.09), '60-79': np.float64(72.11), '80-99': np.float64(76.0), '100-119': np.float64(77.97), '120-139': np.float64(69.32), '140-159': np.float64(78.23), '160-179': np.float64(69.06), '180-199': np.float64(91.6), 'old': np.float64(72.91), 'new': np.float64(91.6)}
+2026-02-10 22:51:46,380 [trainer.py] => CNN top1 curve: [np.float64(92.06), np.float64(86.37), np.float64(81.43), np.float64(79.44), np.float64(79.06), np.float64(77.15), np.float64(75.04), np.float64(75.61), np.float64(74.41), np.float64(74.95)]
+2026-02-10 22:51:46,380 [trainer.py] => CNN top5 curve: [np.float64(97.73), np.float64(96.5), np.float64(94.39), np.float64(92.77), np.float64(92.04), np.float64(91.36), np.float64(90.87), np.float64(90.58), np.float64(89.78), np.float64(89.92)]
+
+2026-02-10 22:51:46,380 [trainer.py] => Average Accuracy (CNN): 79.55199999999999 
+
+2026-02-10 22:51:46,383 [trainer.py] => Forgetting (CNN): 11.291111111111112
+2026-02-13 08:48:53,883 [trainer.py] => config: ./exps/sdadapter_inr.json
+2026-02-13 08:48:53,883 [trainer.py] => seed: 1995
+2026-02-13 08:48:53,883 [trainer.py] => prefix: reproduce
+2026-02-13 08:48:53,883 [trainer.py] => dataset: imagenetr
+2026-02-13 08:48:53,883 [trainer.py] => memory_size: 0
+2026-02-13 08:48:53,883 [trainer.py] => memory_per_class: 0
+2026-02-13 08:48:53,883 [trainer.py] => fixed_memory: False
+2026-02-13 08:48:53,883 [trainer.py] => shuffle: True
+2026-02-13 08:48:53,883 [trainer.py] => init_cls: 20
+2026-02-13 08:48:53,883 [trainer.py] => increment: 20
+2026-02-13 08:48:53,883 [trainer.py] => model_name: sdadapter
+2026-02-13 08:48:53,883 [trainer.py] => backbone_type: vit_base_patch16_224_sdadapter
+2026-02-13 08:48:53,883 [trainer.py] => adapter_rank: 64
+2026-02-13 08:48:53,883 [trainer.py] => device: [device(type='cuda', index=0)]
+2026-02-13 08:48:53,883 [trainer.py] => optimizer: adam
+2026-02-13 08:48:53,884 [trainer.py] => scheduler: constant
+2026-02-13 08:48:53,884 [trainer.py] => filepath: ./out/ImageNetR3_adapter/
+2026-02-13 08:48:53,884 [trainer.py] => init_epoch: 20
+2026-02-13 08:48:53,884 [trainer.py] => init_lr: 0.01
+2026-02-13 08:48:53,884 [trainer.py] => init_milestones: [10000]
+2026-02-13 08:48:53,884 [trainer.py] => init_lr_decay: 0
+2026-02-13 08:48:53,884 [trainer.py] => init_weight_decay: 0.0005
+2026-02-13 08:48:53,884 [trainer.py] => epochs: 20
+2026-02-13 08:48:53,884 [trainer.py] => lrate: 0.01
+2026-02-13 08:48:53,884 [trainer.py] => milestones: [10000]
+2026-02-13 08:48:53,884 [trainer.py] => lrate_decay: 0
+2026-02-13 08:48:53,884 [trainer.py] => batch_size: 128
+2026-02-13 08:48:53,884 [trainer.py] => weight_decay: 0.0002
+2026-02-13 08:48:53,884 [trainer.py] => per_layer_scaling: False
+2026-02-13 08:48:53,936 [data_manager.py] => [146, 198, 169, 126, 142, 183, 108, 86, 79, 35, 112, 29, 0, 2, 59, 178, 143, 31, 147, 33, 123, 114, 194, 54, 138, 75, 158, 26, 131, 141, 180, 132, 22, 49, 116, 111, 24, 98, 107, 89, 151, 83, 185, 15, 27, 136, 65, 1, 82, 87, 99, 153, 47, 144, 145, 175, 155, 77, 191, 199, 46, 28, 76, 71, 93, 137, 5, 188, 187, 74, 103, 173, 18, 80, 88, 48, 109, 81, 91, 101, 43, 102, 61, 182, 3, 14, 40, 42, 167, 66, 57, 73, 135, 39, 45, 184, 161, 85, 148, 121, 8, 195, 21, 4, 106, 133, 118, 10, 176, 50, 36, 192, 162, 172, 96, 197, 20, 117, 140, 186, 92, 97, 44, 149, 13, 37, 170, 25, 181, 171, 23, 104, 189, 11, 159, 67, 94, 68, 55, 6, 150, 165, 120, 139, 72, 154, 115, 125, 53, 58, 16, 113, 41, 190, 174, 127, 110, 7, 38, 32, 95, 19, 196, 51, 78, 34, 122, 152, 119, 134, 129, 130, 128, 17, 30, 90, 124, 160, 100, 193, 12, 56, 64, 168, 105, 63, 177, 70, 60, 163, 9, 62, 156, 52, 84, 157, 69, 179, 166, 164]
+2026-02-13 08:48:55,535 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 08:48:55,944 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 08:49:31,060 [trainer.py] => All params: 172776981
+2026-02-13 08:49:31,062 [trainer.py] => Trainable params: 1179669
+2026-02-13 08:49:31,062 [sdadapter.py] => Learning on 0-20
+2026-02-13 08:52:24,681 [sdadapter.py] => Task 0, Epoch 20/20 => Loss 0.353, Train_accy 90.66
+2026-02-13 08:52:25,791 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_0.pt
+2026-02-13 08:52:27,564 [trainer.py] => No NME accuracy.
+2026-02-13 08:52:27,564 [trainer.py] => CNN: {'total': np.float64(85.09), '00-19': np.float64(85.09), 'old': 0, 'new': np.float64(85.09)}
+2026-02-13 08:52:27,564 [trainer.py] => CNN top1 curve: [np.float64(85.09)]
+2026-02-13 08:52:27,565 [trainer.py] => CNN top5 curve: [np.float64(95.62)]
+
+2026-02-13 08:52:27,565 [trainer.py] => Average Accuracy (CNN): 85.09 
+
+2026-02-13 08:52:27,569 [trainer.py] => All params: 172792361
+2026-02-13 08:52:27,572 [trainer.py] => Trainable params: 1195049
+2026-02-13 08:52:27,574 [sdadapter.py] => Learning on 20-40
+2026-02-13 08:52:28,404 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 08:52:32,218 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 08:55:57,420 [sdadapter.py] => Task 1, Epoch 20/20 => Loss 0.342, Train_accy 83.63
+2026-02-13 08:55:58,575 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_1.pt
+2026-02-13 08:56:03,279 [trainer.py] => No NME accuracy.
+2026-02-13 08:56:03,280 [trainer.py] => CNN: {'total': np.float64(79.82), '00-19': np.float64(80.06), '20-39': np.float64(79.6), 'old': np.float64(80.06), 'new': np.float64(79.6)}
+2026-02-13 08:56:03,280 [trainer.py] => CNN top1 curve: [np.float64(85.09), np.float64(79.82)]
+2026-02-13 08:56:03,280 [trainer.py] => CNN top5 curve: [np.float64(95.62), np.float64(93.22)]
+
+2026-02-13 08:56:03,280 [trainer.py] => Average Accuracy (CNN): 82.455 
+
+2026-02-13 08:56:03,285 [trainer.py] => All params: 172807741
+2026-02-13 08:56:03,288 [trainer.py] => Trainable params: 1210429
+2026-02-13 08:56:03,290 [sdadapter.py] => Learning on 40-60
+2026-02-13 08:56:04,230 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 08:56:07,636 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 09:00:10,347 [sdadapter.py] => Task 2, Epoch 20/20 => Loss 0.343, Train_accy 77.81
+2026-02-13 09:00:11,382 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_2.pt
+2026-02-13 09:00:15,718 [trainer.py] => No NME accuracy.
+2026-02-13 09:00:15,718 [trainer.py] => CNN: {'total': np.float64(77.14), '00-19': np.float64(76.99), '20-39': np.float64(77.73), '40-59': np.float64(76.66), 'old': np.float64(77.38), 'new': np.float64(76.66)}
+2026-02-13 09:00:15,719 [trainer.py] => CNN top1 curve: [np.float64(85.09), np.float64(79.82), np.float64(77.14)]
+2026-02-13 09:00:15,719 [trainer.py] => CNN top5 curve: [np.float64(95.62), np.float64(93.22), np.float64(91.58)]
+
+2026-02-13 09:00:15,719 [trainer.py] => Average Accuracy (CNN): 80.68333333333334 
+
+2026-02-13 09:00:15,724 [trainer.py] => All params: 172823121
+2026-02-13 09:00:15,727 [trainer.py] => Trainable params: 1225809
+2026-02-13 09:00:15,730 [sdadapter.py] => Learning on 60-80
+2026-02-13 09:00:18,241 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 09:00:18,489 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 09:04:45,733 [sdadapter.py] => Task 3, Epoch 20/20 => Loss 0.390, Train_accy 65.37
+2026-02-13 09:04:46,784 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_3.pt
+2026-02-13 09:04:51,935 [trainer.py] => No NME accuracy.
+2026-02-13 09:04:51,936 [trainer.py] => CNN: {'total': np.float64(73.47), '00-19': np.float64(75.2), '20-39': np.float64(77.16), '40-59': np.float64(75.27), '60-79': np.float64(66.27), 'old': np.float64(75.92), 'new': np.float64(66.27)}
+2026-02-13 09:04:51,936 [trainer.py] => CNN top1 curve: [np.float64(85.09), np.float64(79.82), np.float64(77.14), np.float64(73.47)]
+2026-02-13 09:04:51,936 [trainer.py] => CNN top5 curve: [np.float64(95.62), np.float64(93.22), np.float64(91.58), np.float64(89.65)]
+
+2026-02-13 09:04:51,936 [trainer.py] => Average Accuracy (CNN): 78.88 
+
+2026-02-13 09:04:51,941 [trainer.py] => All params: 172838501
+2026-02-13 09:04:51,945 [trainer.py] => Trainable params: 1241189
+2026-02-13 09:04:51,947 [sdadapter.py] => Learning on 80-100
+2026-02-13 09:04:52,806 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 09:04:53,064 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 09:08:12,812 [sdadapter.py] => Task 4, Epoch 20/20 => Loss 0.392, Train_accy 65.45
+2026-02-13 09:08:13,837 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_4.pt
+2026-02-13 09:08:19,977 [trainer.py] => No NME accuracy.
+2026-02-13 09:08:19,977 [trainer.py] => CNN: {'total': np.float64(73.11), '00-19': np.float64(75.69), '20-39': np.float64(76.58), '40-59': np.float64(74.96), '60-79': np.float64(67.47), '80-99': np.float64(69.5), 'old': np.float64(73.66), 'new': np.float64(69.5)}
+2026-02-13 09:08:19,978 [trainer.py] => CNN top1 curve: [np.float64(85.09), np.float64(79.82), np.float64(77.14), np.float64(73.47), np.float64(73.11)]
+2026-02-13 09:08:19,978 [trainer.py] => CNN top5 curve: [np.float64(95.62), np.float64(93.22), np.float64(91.58), np.float64(89.65), np.float64(88.7)]
+
+2026-02-13 09:08:19,978 [trainer.py] => Average Accuracy (CNN): 77.726 
+
+2026-02-13 09:08:19,982 [trainer.py] => All params: 172853881
+2026-02-13 09:08:19,985 [trainer.py] => Trainable params: 1256569
+2026-02-13 09:08:19,988 [sdadapter.py] => Learning on 100-120
+2026-02-13 09:08:20,799 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 09:08:21,053 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 09:13:15,999 [sdadapter.py] => Task 5, Epoch 20/20 => Loss 0.421, Train_accy 67.07
+2026-02-13 09:13:17,073 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_5.pt
+2026-02-13 09:13:25,039 [trainer.py] => No NME accuracy.
+2026-02-13 09:13:25,040 [trainer.py] => CNN: {'total': np.float64(70.47), '00-19': np.float64(73.91), '20-39': np.float64(74.28), '40-59': np.float64(71.87), '60-79': np.float64(64.62), '80-99': np.float64(68.25), '100-119': np.float64(69.06), 'old': np.float64(70.76), 'new': np.float64(69.06)}
+2026-02-13 09:13:25,040 [trainer.py] => CNN top1 curve: [np.float64(85.09), np.float64(79.82), np.float64(77.14), np.float64(73.47), np.float64(73.11), np.float64(70.47)]
+2026-02-13 09:13:25,040 [trainer.py] => CNN top5 curve: [np.float64(95.62), np.float64(93.22), np.float64(91.58), np.float64(89.65), np.float64(88.7), np.float64(87.62)]
+
+2026-02-13 09:13:25,041 [trainer.py] => Average Accuracy (CNN): 76.51666666666667 
+
+2026-02-13 09:13:25,045 [trainer.py] => All params: 172869261
+2026-02-13 09:13:25,048 [trainer.py] => Trainable params: 1271949
+2026-02-13 09:13:25,051 [sdadapter.py] => Learning on 120-140
+2026-02-13 09:13:25,882 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 09:13:26,310 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 09:18:06,351 [sdadapter.py] => Task 6, Epoch 20/20 => Loss 0.473, Train_accy 60.06
+2026-02-13 09:18:07,449 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_6.pt
+2026-02-13 09:18:16,074 [trainer.py] => No NME accuracy.
+2026-02-13 09:18:16,074 [trainer.py] => CNN: {'total': np.float64(68.48), '00-19': np.float64(72.93), '20-39': np.float64(70.69), '40-59': np.float64(71.25), '60-79': np.float64(64.17), '80-99': np.float64(67.75), '100-119': np.float64(69.06), '120-139': np.float64(62.14), 'old': np.float64(69.38), 'new': np.float64(62.14)}
+2026-02-13 09:18:16,075 [trainer.py] => CNN top1 curve: [np.float64(85.09), np.float64(79.82), np.float64(77.14), np.float64(73.47), np.float64(73.11), np.float64(70.47), np.float64(68.48)]
+2026-02-13 09:18:16,075 [trainer.py] => CNN top5 curve: [np.float64(95.62), np.float64(93.22), np.float64(91.58), np.float64(89.65), np.float64(88.7), np.float64(87.62), np.float64(85.58)]
+
+2026-02-13 09:18:16,075 [trainer.py] => Average Accuracy (CNN): 75.36857142857143 
+
+2026-02-13 09:18:16,079 [trainer.py] => All params: 172884641
+2026-02-13 09:18:16,082 [trainer.py] => Trainable params: 1287329
+2026-02-13 09:18:16,085 [sdadapter.py] => Learning on 140-160
+2026-02-13 09:18:16,916 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 09:18:17,174 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 09:23:15,486 [sdadapter.py] => Task 7, Epoch 20/20 => Loss 0.337, Train_accy 68.59
+2026-02-13 09:23:16,552 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_7.pt
+2026-02-13 09:23:26,603 [trainer.py] => No NME accuracy.
+2026-02-13 09:23:26,603 [trainer.py] => CNN: {'total': np.float64(68.21), '00-19': np.float64(70.99), '20-39': np.float64(69.97), '40-59': np.float64(73.11), '60-79': np.float64(61.32), '80-99': np.float64(66.25), '100-119': np.float64(67.66), '120-139': np.float64(62.14), '140-159': np.float64(73.1), 'old': np.float64(67.55), 'new': np.float64(73.1)}
+2026-02-13 09:23:26,603 [trainer.py] => CNN top1 curve: [np.float64(85.09), np.float64(79.82), np.float64(77.14), np.float64(73.47), np.float64(73.11), np.float64(70.47), np.float64(68.48), np.float64(68.21)]
+2026-02-13 09:23:26,604 [trainer.py] => CNN top5 curve: [np.float64(95.62), np.float64(93.22), np.float64(91.58), np.float64(89.65), np.float64(88.7), np.float64(87.62), np.float64(85.58), np.float64(85.51)]
+
+2026-02-13 09:23:26,604 [trainer.py] => Average Accuracy (CNN): 74.47375000000001 
+
+2026-02-13 09:23:26,608 [trainer.py] => All params: 172900021
+2026-02-13 09:23:26,611 [trainer.py] => Trainable params: 1302709
+2026-02-13 09:23:26,615 [sdadapter.py] => Learning on 160-180
+2026-02-13 09:23:27,442 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 09:23:27,916 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 09:29:07,324 [sdadapter.py] => Task 8, Epoch 20/20 => Loss 0.614, Train_accy 53.82
+2026-02-13 09:29:08,404 [sdadapter.py] => Saved task checkpoint to: ./out/ImageNetR3_adapter/ckpt_task_8.pt
+2026-02-13 09:29:21,639 [trainer.py] => No NME accuracy.
+2026-02-13 09:29:21,639 [trainer.py] => CNN: {'total': np.float64(67.09), '00-19': np.float64(72.29), '20-39': np.float64(69.97), '40-59': np.float64(72.49), '60-79': np.float64(62.82), '80-99': np.float64(66.25), '100-119': np.float64(65.78), '120-139': np.float64(61.55), '140-159': np.float64(72.04), '160-179': np.float64(59.36), 'old': np.float64(68.06), 'new': np.float64(59.36)}
+2026-02-13 09:29:21,640 [trainer.py] => CNN top1 curve: [np.float64(85.09), np.float64(79.82), np.float64(77.14), np.float64(73.47), np.float64(73.11), np.float64(70.47), np.float64(68.48), np.float64(68.21), np.float64(67.09)]
+2026-02-13 09:29:21,640 [trainer.py] => CNN top5 curve: [np.float64(95.62), np.float64(93.22), np.float64(91.58), np.float64(89.65), np.float64(88.7), np.float64(87.62), np.float64(85.58), np.float64(85.51), np.float64(83.87)]
+
+2026-02-13 09:29:21,640 [trainer.py] => Average Accuracy (CNN): 73.65333333333335 
+
+2026-02-13 09:29:21,644 [trainer.py] => All params: 172915401
+2026-02-13 09:29:21,647 [trainer.py] => Trainable params: 1318089
+2026-02-13 09:29:21,651 [sdadapter.py] => Learning on 180-200
+2026-02-13 09:29:22,539 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 09:29:22,972 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 09:35:13,355 [trainer.py] => config: ./exps/sdadapter_inr.json
+2026-02-13 09:35:13,355 [trainer.py] => seed: 1995
+2026-02-13 09:35:13,355 [trainer.py] => prefix: reproduce
+2026-02-13 09:35:13,355 [trainer.py] => dataset: imagenetr
+2026-02-13 09:35:13,355 [trainer.py] => memory_size: 0
+2026-02-13 09:35:13,355 [trainer.py] => memory_per_class: 0
+2026-02-13 09:35:13,355 [trainer.py] => fixed_memory: False
+2026-02-13 09:35:13,355 [trainer.py] => shuffle: True
+2026-02-13 09:35:13,355 [trainer.py] => init_cls: 20
+2026-02-13 09:35:13,355 [trainer.py] => increment: 20
+2026-02-13 09:35:13,355 [trainer.py] => model_name: sdadapter
+2026-02-13 09:35:13,355 [trainer.py] => backbone_type: vit_base_patch16_224_sdadapter
+2026-02-13 09:35:13,355 [trainer.py] => adapter_rank: 64
+2026-02-13 09:35:13,355 [trainer.py] => device: [device(type='cuda', index=0)]
+2026-02-13 09:35:13,355 [trainer.py] => optimizer: adam
+2026-02-13 09:35:13,355 [trainer.py] => scheduler: constant
+2026-02-13 09:35:13,355 [trainer.py] => filepath: ./checkpoints/ImageNetR3_adapter/
+2026-02-13 09:35:13,355 [trainer.py] => init_epoch: 20
+2026-02-13 09:35:13,356 [trainer.py] => init_lr: 0.01
+2026-02-13 09:35:13,356 [trainer.py] => init_milestones: [10000]
+2026-02-13 09:35:13,356 [trainer.py] => init_lr_decay: 0
+2026-02-13 09:35:13,356 [trainer.py] => init_weight_decay: 0.0005
+2026-02-13 09:35:13,356 [trainer.py] => epochs: 20
+2026-02-13 09:35:13,356 [trainer.py] => lrate: 0.01
+2026-02-13 09:35:13,356 [trainer.py] => milestones: [10000]
+2026-02-13 09:35:13,356 [trainer.py] => lrate_decay: 0
+2026-02-13 09:35:13,356 [trainer.py] => batch_size: 128
+2026-02-13 09:35:13,356 [trainer.py] => weight_decay: 0.0002
+2026-02-13 09:35:13,356 [trainer.py] => per_layer_scaling: False
+2026-02-13 09:35:13,408 [data_manager.py] => [146, 198, 169, 126, 142, 183, 108, 86, 79, 35, 112, 29, 0, 2, 59, 178, 143, 31, 147, 33, 123, 114, 194, 54, 138, 75, 158, 26, 131, 141, 180, 132, 22, 49, 116, 111, 24, 98, 107, 89, 151, 83, 185, 15, 27, 136, 65, 1, 82, 87, 99, 153, 47, 144, 145, 175, 155, 77, 191, 199, 46, 28, 76, 71, 93, 137, 5, 188, 187, 74, 103, 173, 18, 80, 88, 48, 109, 81, 91, 101, 43, 102, 61, 182, 3, 14, 40, 42, 167, 66, 57, 73, 135, 39, 45, 184, 161, 85, 148, 121, 8, 195, 21, 4, 106, 133, 118, 10, 176, 50, 36, 192, 162, 172, 96, 197, 20, 117, 140, 186, 92, 97, 44, 149, 13, 37, 170, 25, 181, 171, 23, 104, 189, 11, 159, 67, 94, 68, 55, 6, 150, 165, 120, 139, 72, 154, 115, 125, 53, 58, 16, 113, 41, 190, 174, 127, 110, 7, 38, 32, 95, 19, 196, 51, 78, 34, 122, 152, 119, 134, 129, 130, 128, 17, 30, 90, 124, 160, 100, 193, 12, 56, 64, 168, 105, 63, 177, 70, 60, 163, 9, 62, 156, 52, 84, 157, 69, 179, 166, 164]
+2026-02-13 09:35:14,937 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 09:35:20,356 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 09:36:27,058 [trainer.py] => All params: 172776981
+2026-02-13 09:36:27,061 [trainer.py] => Trainable params: 1179669
+2026-02-13 09:36:27,062 [sdadapter.py] => Learning on 0-20
+2026-02-13 09:39:41,306 [sdadapter.py] => Task 0, Epoch 20/20 => Loss 0.353, Train_accy 90.66
+2026-02-13 09:39:42,221 [sdadapter.py] => Saved task checkpoint to: ./checkpoints/ImageNetR3_adapter/ckpt_task_0.pt
+2026-02-13 09:39:44,131 [trainer.py] => No NME accuracy.
+2026-02-13 09:39:44,131 [trainer.py] => CNN: {'total': np.float64(85.09), '00-19': np.float64(85.09), 'old': 0, 'new': np.float64(85.09)}
+2026-02-13 09:39:44,132 [trainer.py] => CNN top1 curve: [np.float64(85.09)]
+2026-02-13 09:39:44,132 [trainer.py] => CNN top5 curve: [np.float64(95.62)]
+
+2026-02-13 09:39:44,132 [trainer.py] => Average Accuracy (CNN): 85.09 
+
+2026-02-13 09:39:44,136 [trainer.py] => All params: 172792361
+2026-02-13 09:39:44,139 [trainer.py] => Trainable params: 1195049
+2026-02-13 09:39:44,140 [sdadapter.py] => Learning on 20-40
+2026-02-13 09:39:44,993 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 09:39:45,260 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 09:43:14,816 [sdadapter.py] => Task 1, Epoch 20/20 => Loss 0.342, Train_accy 83.63
+2026-02-13 09:43:15,708 [sdadapter.py] => Saved task checkpoint to: ./checkpoints/ImageNetR3_adapter/ckpt_task_1.pt
+2026-02-13 09:43:20,816 [trainer.py] => No NME accuracy.
+2026-02-13 09:43:20,817 [trainer.py] => CNN: {'total': np.float64(79.82), '00-19': np.float64(80.06), '20-39': np.float64(79.6), 'old': np.float64(80.06), 'new': np.float64(79.6)}
+2026-02-13 09:43:20,817 [trainer.py] => CNN top1 curve: [np.float64(85.09), np.float64(79.82)]
+2026-02-13 09:43:20,817 [trainer.py] => CNN top5 curve: [np.float64(95.62), np.float64(93.22)]
+
+2026-02-13 09:43:20,817 [trainer.py] => Average Accuracy (CNN): 82.455 
+
+2026-02-13 09:43:20,818 [trainer.py] => All params: 172807741
+2026-02-13 09:43:20,819 [trainer.py] => Trainable params: 1210429
+2026-02-13 09:43:20,820 [sdadapter.py] => Learning on 40-60
+2026-02-13 09:43:21,817 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 09:43:22,061 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 09:47:16,034 [sdadapter.py] => Task 2, Epoch 20/20 => Loss 0.343, Train_accy 77.81
+2026-02-13 09:47:16,967 [sdadapter.py] => Saved task checkpoint to: ./checkpoints/ImageNetR3_adapter/ckpt_task_2.pt
+2026-02-13 09:47:21,915 [trainer.py] => No NME accuracy.
+2026-02-13 09:47:21,916 [trainer.py] => CNN: {'total': np.float64(77.14), '00-19': np.float64(76.99), '20-39': np.float64(77.73), '40-59': np.float64(76.66), 'old': np.float64(77.38), 'new': np.float64(76.66)}
+2026-02-13 09:47:21,916 [trainer.py] => CNN top1 curve: [np.float64(85.09), np.float64(79.82), np.float64(77.14)]
+2026-02-13 09:47:21,916 [trainer.py] => CNN top5 curve: [np.float64(95.62), np.float64(93.22), np.float64(91.58)]
+
+2026-02-13 09:47:21,916 [trainer.py] => Average Accuracy (CNN): 80.68333333333334 
+
+2026-02-13 09:47:21,921 [trainer.py] => All params: 172823121
+2026-02-13 09:47:21,924 [trainer.py] => Trainable params: 1225809
+2026-02-13 09:47:21,927 [sdadapter.py] => Learning on 60-80
+2026-02-13 09:47:22,814 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 09:47:23,068 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
+2026-02-13 09:51:41,099 [sdadapter.py] => Task 3, Epoch 20/20 => Loss 0.390, Train_accy 65.37
+2026-02-13 09:51:42,042 [sdadapter.py] => Saved task checkpoint to: ./checkpoints/ImageNetR3_adapter/ckpt_task_3.pt
+2026-02-13 09:51:47,393 [trainer.py] => No NME accuracy.
+2026-02-13 09:51:47,394 [trainer.py] => CNN: {'total': np.float64(73.47), '00-19': np.float64(75.2), '20-39': np.float64(77.16), '40-59': np.float64(75.27), '60-79': np.float64(66.27), 'old': np.float64(75.92), 'new': np.float64(66.27)}
+2026-02-13 09:51:47,394 [trainer.py] => CNN top1 curve: [np.float64(85.09), np.float64(79.82), np.float64(77.14), np.float64(73.47)]
+2026-02-13 09:51:47,394 [trainer.py] => CNN top5 curve: [np.float64(95.62), np.float64(93.22), np.float64(91.58), np.float64(89.65)]
+
+2026-02-13 09:51:47,394 [trainer.py] => Average Accuracy (CNN): 78.88 
+
+2026-02-13 09:51:47,399 [trainer.py] => All params: 172838501
+2026-02-13 09:51:47,402 [trainer.py] => Trainable params: 1241189
+2026-02-13 09:51:47,405 [sdadapter.py] => Learning on 80-100
+2026-02-13 09:51:48,297 [_builder.py] => Loading pretrained weights from Hugging Face hub (timm/vit_base_patch16_224.augreg2_in21k_ft_in1k)
+2026-02-13 09:51:48,568 [_hub.py] => [timm/vit_base_patch16_224.augreg2_in21k_ft_in1k] Safe alternative available for 'pytorch_model.bin' (as 'model.safetensors'). Loading weights using safetensors.
