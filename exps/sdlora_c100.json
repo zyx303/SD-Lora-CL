@@ -25,5 +25,6 @@
     "milestones": [40, 70],
     "lrate_decay": 0, 
     "batch_size": 128,
-    "weight_decay": 2e-4
+    "weight_decay": 2e-4,
+    "per_layer_scaling": true
 }
