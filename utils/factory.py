@@ -18,7 +18,7 @@ def get_model(model_name, args):
         from models.coda_prompt import Learner
     elif name == "finetune":
         from models.finetune import Learner
-    elif name == "sdlora":
+    elif name == "sdlora" or name == "sdlora_ca":
         from models.sdlora import Learner
     elif name == "sdadapter":
         from models.sdadapter import Learner

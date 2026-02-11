@@ -311,7 +311,12 @@ class IncrementalNet(BaseNet):
         fc = SimpleLinear(in_dim, out_dim)
         return fc
 
-    def forward(self, x, ortho_loss=False, eval=False):
+    def forward(self, x, ortho_loss=False, eval=False, fc_only=False):
+        if fc_only:
+            # CA stage2: skip backbone, pass features directly through fc
+            out = self.fc(x)
+            out.update({"features": x})
+            return out
         if eval:
             out = self.backbone(x, eval=True)
             out.update({"features": x})
