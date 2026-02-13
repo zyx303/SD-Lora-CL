@@ -78,10 +78,10 @@ class _Adapter_MLP_train(nn.Module):
             temp_up.weight.requires_grad = False
             temp_up.to(x.device)
 
-            # Normalized adapter output for previous tasks (direction)
+            # Direction is defined by normalized adapter output:
+            # dir_t(x) = z_t(x) / (||z_t(x)|| + eps), where z_t(x)=up(relu(down(x)))
             adapter_out = temp_up(F.relu(temp_down(x)))
-            norm_factor = torch.norm(temp_down.weight) * torch.norm(temp_up.weight)
-            adapter_out = adapter_out / norm_factor
+            adapter_out = F.normalize(adapter_out, p=2, dim=-1, eps=1e-6)
 
             # Get scaling function: per-layer uses nested ModuleList, global uses flat list
             if self.per_layer_scaling:
@@ -94,13 +94,15 @@ class _Adapter_MLP_train(nn.Module):
             else:
                 new_adapter += prev_scale_fn(adapter_out)
 
-        # Current task adapter (not normalized, raw magnitude)
+        # Current task direction follows the same output-normalized form.
         if self.per_layer_scaling:
             cur_scale_fn = self.scaling_factor[self.t_layer_i]
         else:
             cur_scale_fn = self.scaling_factor[0]
+        cur_adapter_out = self.adapter_up(F.relu(self.adapter_down(x)))
+        cur_adapter_out = F.normalize(cur_adapter_out, p=2, dim=-1, eps=1e-6)
         new_adapter += cur_scale_fn(
-            self.adapter_up(F.relu(self.adapter_down(x)))
+            cur_adapter_out
         )
 
         return mlp_output + new_adapter
@@ -143,10 +145,10 @@ class _Adapter_MLP_eval(nn.Module):
             temp_down.weight = Parameter(down_layer.weight)
             temp_up.weight = Parameter(up_layer.weight)
 
-            # Normalized adapter output (direction)
+            # Direction is defined by normalized adapter output:
+            # dir_t(x) = z_t(x) / (||z_t(x)|| + eps), where z_t(x)=up(relu(down(x)))
             adapter_out = temp_up(F.relu(temp_down(x)))
-            norm_factor = torch.norm(temp_down.weight) * torch.norm(temp_up.weight)
-            adapter_out = adapter_out / norm_factor
+            adapter_out = F.normalize(adapter_out, p=2, dim=-1, eps=1e-6)
 
             # Get scaling function: per-layer uses nested ModuleList, global uses flat list
             if self.per_layer_scaling:
@@ -164,9 +166,9 @@ class _Adapter_MLP_eval(nn.Module):
             cur_scale_fn = self.scaling_factor[self.t_layer_i]
         else:
             cur_scale_fn = self.scaling_factor[0]
-        new_adapter = cur_scale_fn(
-            temp_up(F.relu(temp_down(x)))
-        )
+        cur_adapter_out = temp_up(F.relu(temp_down(x)))
+        cur_adapter_out = F.normalize(cur_adapter_out, p=2, dim=-1, eps=1e-6)
+        new_adapter += cur_scale_fn(cur_adapter_out)
 
         return mlp_output + new_adapter
 
