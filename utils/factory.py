@@ -20,7 +20,7 @@ def get_model(model_name, args):
         from models.finetune import Learner
     elif name == "sdlora" or name == "sdlora_ca":
         from models.sdlora import Learner
-    elif name == "sdadapter":
+    elif name == "sdadapter" or name == "sdadapter_ca":
         from models.sdadapter import Learner
     elif name == "icarl":
         from models.icarl import Learner

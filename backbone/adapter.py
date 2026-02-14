@@ -94,16 +94,13 @@ class _Adapter_MLP_train(nn.Module):
             else:
                 new_adapter += prev_scale_fn(adapter_out)
 
-        # Current task direction follows the same output-normalized form.
+        # Current task: raw output (no normalization) 
         if self.per_layer_scaling:
             cur_scale_fn = self.scaling_factor[self.t_layer_i]
         else:
             cur_scale_fn = self.scaling_factor[0]
         cur_adapter_out = self.adapter_up(F.relu(self.adapter_down(x)))
-        cur_adapter_out = F.normalize(cur_adapter_out, p=2, dim=-1, eps=1e-6)
-        new_adapter += cur_scale_fn(
-            cur_adapter_out
-        )
+        new_adapter += cur_scale_fn(cur_adapter_out)
 
         return mlp_output + new_adapter
 
@@ -161,13 +158,12 @@ class _Adapter_MLP_eval(nn.Module):
             else:
                 new_adapter += prev_scale_fn(adapter_out)
 
-        # Last task contribution with current scaling factor
+        # Last task: raw output (no normalization), consistent with train path.
         if self.per_layer_scaling:
             cur_scale_fn = self.scaling_factor[self.t_layer_i]
         else:
             cur_scale_fn = self.scaling_factor[0]
         cur_adapter_out = temp_up(F.relu(temp_down(x)))
-        cur_adapter_out = F.normalize(cur_adapter_out, p=2, dim=-1, eps=1e-6)
         new_adapter += cur_scale_fn(cur_adapter_out)
 
         return mlp_output + new_adapter
